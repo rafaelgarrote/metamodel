@@ -345,7 +345,7 @@ public final class Query extends BaseObject implements Cloneable, Serializable {
                 } else {
                     searchStr = operatorCandidate.toSql();
                 }
-                final int operatorIndex = upperExpression.indexOf(searchStr);
+                final int operatorIndex = expression.indexOf(searchStr);
                 if (operatorIndex > 0) {
                     operator = operatorCandidate;
                     leftSide = expression.substring(0, operatorIndex).trim();
