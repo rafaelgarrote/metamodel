@@ -240,12 +240,18 @@ public final class Query extends BaseObject implements Cloneable, Serializable {
                 orderByToken = orderByToken.substring(0, orderByToken.length() - 4).trim();
             } else if (orderByToken.toUpperCase().endsWith("ASC")) {
                 direction = Direction.ASC;
-                orderByToken = orderByToken.substring(0, orderByToken.length() - 3).trim();
+                orderByToken = orderByToken.substring(0, orderByToken.length() - 3).trim(); 
             } else {
                 direction = Direction.ASC;
             }
 
-            OrderByItem orderByItem = new OrderByItem(findSelectItem(orderByToken, true), direction);
+            OrderByItem orderByItem = null;
+            for(SelectItem item: _selectClause.getItems()) {
+                if (orderByToken.equals(item.toStringNoAlias(false)) || orderByToken.equals(item.getAlias())) {
+                    orderByItem = new OrderByItem(item, direction);
+                    break;
+                }
+            }
             orderBy(orderByItem);
         }
         return this;
